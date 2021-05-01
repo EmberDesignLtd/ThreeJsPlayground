@@ -27,6 +27,9 @@
   "dependencies": {
     "@types/three": "^0.127.1",
     "parcel-bundler": "^1.12.5",
+    "parcel-plugin-asset-copier": "^1.1.0",
+    "rxjs": "^7.0.0",
     "three": "^0.128.0"
-  }
+  },
+  "assetsPath": "src"
 }
