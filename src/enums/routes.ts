@@ -4,4 +4,5 @@
  */
 export enum Route {
   HOMEPAGE = '../pages/homepage/homepage.html',
+  BASIC_SCENE = '../pages/basic_scene/basic_scene.html',
 }
