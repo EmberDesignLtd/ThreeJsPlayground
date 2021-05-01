@@ -1,0 +1,14 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.homepage {
+  border: unset;
+  height: 100vh;
+  overflow: auto;
+  width: 100vw;
+}
