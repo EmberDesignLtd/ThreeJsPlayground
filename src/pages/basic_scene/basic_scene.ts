@@ -1,4 +1,3 @@
-import { interval } from 'rxjs';
 import * as THREE from 'three';
 import { MeshBasicMaterial } from 'three';
 import { routeChange$ } from './../../functions/router';
@@ -34,6 +33,7 @@ export class BasicScene {
   private readonly perspectiveCamera = new THREE.PerspectiveCamera(100, SIZES.w / SIZES.h);
 
   private readonly cubes: THREE.Mesh[] = [];
+  private readonly cubeGroup = new THREE.Group();
   private renderer: THREE.WebGLRenderer;
 
   constructor() {
@@ -43,8 +43,10 @@ export class BasicScene {
 
   private init(): void {
     if (!this.scene) return;
-    this.buildAndAddCubes();
+    this.scene.add(this.cubeGroup);
     this.scene.add(this.perspectiveCamera);
+    this.buildAndAddCubes();
+
     const canvas = document.getElementById(CANVAS_SCENE) as HTMLCanvasElement;
 
     if (!canvas) return;
@@ -52,7 +54,7 @@ export class BasicScene {
       canvas,
     });
     this.renderer.setSize(SIZES.w, SIZES.h);
-    this.animate();
+    this.tick();
     this.spinTheCubes();
   }
 
@@ -81,9 +83,10 @@ export class BasicScene {
     }
   }
 
-  private animate(): void {
-    requestAnimationFrame(this.animate.bind(this));
+  private tick(): void {
+    this.spinTheCubes();
     this.renderer.render(this.scene, this.perspectiveCamera);
+    window.requestAnimationFrame(this.tick.bind(this));
   }
 
   private mathRandomNegativePositivePosition(range: number): number {
@@ -93,19 +96,18 @@ export class BasicScene {
   }
 
   private spinTheCubes(): void {
-    interval(60).subscribe(() => {
-      for (const cube of this.cubes) {
-        cube.position.set(
-          this.mathRandomNegativePositivePosition(15),
-          this.mathRandomNegativePositivePosition(15),
-          this.mathRandomNegativePositivePosition(2)
-        );
-        cube.rotation.set(
-          this.mathRandomNegativePositivePosition(360),
-          this.mathRandomNegativePositivePosition(360),
-          this.mathRandomNegativePositivePosition(360)
-        );
-      }
-    });
+    for (const cube of this.cubes) {
+      cube.position.set(
+        this.mathRandomNegativePositivePosition(15),
+        this.mathRandomNegativePositivePosition(15),
+        this.mathRandomNegativePositivePosition(2)
+      );
+      cube.rotation.set(
+        this.mathRandomNegativePositivePosition(360),
+        this.mathRandomNegativePositivePosition(360),
+        this.mathRandomNegativePositivePosition(360)
+      );
+      this.perspectiveCamera.lookAt(this.cubes[Math.floor(Math.random() * 21)].position);
+    }
   }
 }
