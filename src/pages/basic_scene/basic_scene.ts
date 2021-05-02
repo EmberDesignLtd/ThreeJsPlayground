@@ -86,7 +86,7 @@ export class BasicScene {
   private tick(): void {
     this.spinTheCubes();
     this.renderer.render(this.scene, this.perspectiveCamera);
-    window.requestAnimationFrame(this.tick.bind(this));
+    requestAnimationFrame(this.tick.bind(this));
   }
 
   private mathRandomNegativePositivePosition(range: number): number {
