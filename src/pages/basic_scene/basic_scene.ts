@@ -32,6 +32,7 @@ export class BasicScene {
 
   private readonly meshCollection: THREE.Mesh[] = [];
   private renderer: THREE.WebGLRenderer;
+  private time = Date.now();
 
   constructor() {
     this.perspectiveCamera.position.set(0, 0, 15);
@@ -120,7 +121,7 @@ export class BasicScene {
     }
   }
 
-  private rotateMesh(mesh, rotationFactor = 0.05): void {
+  private rotateMesh(mesh: THREE.Mesh, rotationFactor = 0.03): void {
     mesh.rotateX(Math.random() * rotationFactor);
     mesh.rotateY(Math.random() * rotationFactor);
     mesh.rotateZ(Math.random() * rotationFactor);
@@ -131,9 +132,9 @@ export class BasicScene {
     for (const mesh of this.meshCollection) {
       counter++;
       this.meshBoundaries(mesh, 25);
-      mesh.position.x += counter % 2 === 0 ? Math.random() * 0.1 : -(Math.random() * 0.2);
+      mesh.position.x += counter % 3 === 0 ? Math.random() * 0.1 : -(Math.random() * 0.2);
       this.meshBoundaries(mesh, 18, true);
-      mesh.position.y += counter % 2 === 0 ? Math.random() * 0.1 : -(Math.random() * 0.2);
+      mesh.position.y += counter % 3 === 0 ? Math.random() * 0.1 : -(Math.random() * 0.2);
       this.rotateMesh(mesh);
     }
   }
