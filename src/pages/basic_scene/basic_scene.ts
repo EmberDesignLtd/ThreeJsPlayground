@@ -32,7 +32,6 @@ export class BasicScene {
 
   private readonly meshCollection: THREE.Mesh[] = [];
   private renderer: THREE.WebGLRenderer;
-  private time = Date.now();
 
   constructor() {
     this.perspectiveCamera.position.set(0, 0, 15);
@@ -121,10 +120,13 @@ export class BasicScene {
     }
   }
 
-  private rotateMesh(mesh: THREE.Mesh, rotationFactor = 0.03): void {
-    mesh.rotateX(Math.random() * rotationFactor);
-    mesh.rotateY(Math.random() * rotationFactor);
-    mesh.rotateZ(Math.random() * rotationFactor);
+  THREEClock = new THREE.Clock();
+
+  private rotateMesh(mesh: THREE.Mesh): void {
+    const timestamp = this.THREEClock.getElapsedTime();
+    mesh.rotation.x = timestamp;
+    mesh.rotation.y = timestamp;
+    mesh.rotation.z = timestamp;
   }
 
   private spinAndTranslateMesh(): void {
