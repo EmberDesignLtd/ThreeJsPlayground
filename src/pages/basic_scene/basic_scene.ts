@@ -1,9 +1,111 @@
+import { interval } from 'rxjs';
 import * as THREE from 'three';
+import { MeshBasicMaterial } from 'three';
+import { routeChange$ } from './../../functions/router';
+
+const SIZES = {
+  w: 800,
+  h: 600,
+};
+
+enum Colour {
+  RED = 'red',
+  BLUE = 'blue',
+  ORANGE = 'orange',
+  GREEN = 'green',
+}
+
+const CANVAS_SCENE = 'basic-scene-canvas';
 
 export class BasicScene {
-  readonly scene = new THREE.Scene();
+  // Scenes
+  private readonly scene = new THREE.Scene();
+
+  // Geometries
+  private readonly cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+
+  // Materials
+  private readonly flatRedMaterial = new THREE.MeshBasicMaterial({ color: Colour.RED });
+  private readonly flatBlueMaterial = new THREE.MeshBasicMaterial({ color: Colour.BLUE });
+  private readonly flatOrangeMaterial = new THREE.MeshBasicMaterial({ color: Colour.ORANGE });
+  private readonly flatGreenMaterial = new THREE.MeshBasicMaterial({ color: Colour.GREEN });
+
+  // Cameras
+  private readonly perspectiveCamera = new THREE.PerspectiveCamera(100, SIZES.w / SIZES.h);
+
+  private readonly cubes: THREE.Mesh[] = [];
+  private renderer: THREE.WebGLRenderer;
 
   constructor() {
-    console.log(this.scene);
+    this.perspectiveCamera.position.set(0, 0, 15);
+    routeChange$.subscribe(this.init.bind(this));
+  }
+
+  private init(): void {
+    if (!this.scene) return;
+    this.buildAndAddCubes();
+    this.scene.add(this.perspectiveCamera);
+    const canvas = document.getElementById(CANVAS_SCENE) as HTMLCanvasElement;
+
+    if (!canvas) return;
+    this.renderer = new THREE.WebGLRenderer({
+      canvas,
+    });
+    this.renderer.setSize(SIZES.w, SIZES.h);
+    this.animate();
+    this.spinTheCubes();
+  }
+
+  private buildAndAddCubes(): void {
+    for (let i = 0; i < 20; i++) {
+      const colourNumber = Math.floor(Math.random() * 5);
+      let material: MeshBasicMaterial;
+
+      switch (colourNumber) {
+        case 1:
+          material = this.flatBlueMaterial;
+          break;
+        case 2:
+          material = this.flatRedMaterial;
+          break;
+        case 3:
+          material = this.flatGreenMaterial;
+          break;
+        case 4:
+          material = this.flatOrangeMaterial;
+          break;
+      }
+      const cubeMesh = new THREE.Mesh(this.cubeGeometry, material);
+      this.cubes.push(cubeMesh);
+      this.scene.add(cubeMesh);
+    }
+  }
+
+  private animate(): void {
+    requestAnimationFrame(this.animate.bind(this));
+    this.renderer.render(this.scene, this.perspectiveCamera);
+  }
+
+  private mathRandomNegativePositivePosition(range: number): number {
+    return Math.floor(
+      Math.floor(Math.random() * 2) === 0 ? Math.random() * range : Math.random() * -range
+    );
+  }
+
+  private spinTheCubes(): void {
+    interval(60).subscribe(() => {
+      for (const cube of this.cubes) {
+        cube.position.set(
+          this.mathRandomNegativePositivePosition(15),
+          this.mathRandomNegativePositivePosition(15),
+          this.mathRandomNegativePositivePosition(2)
+        );
+        cube.rotation.set(
+          this.mathRandomNegativePositivePosition(360),
+          this.mathRandomNegativePositivePosition(360),
+          this.mathRandomNegativePositivePosition(360)
+        );
+      }
+    });
   }
 }
