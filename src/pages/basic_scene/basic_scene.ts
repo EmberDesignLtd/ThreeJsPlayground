@@ -1,18 +1,13 @@
 import * as THREE from 'three';
 import { MeshBasicMaterial } from 'three';
+import { Colour } from '../../enums/colour';
+import { Axis } from './../../enums/axis';
 import { routeChange$ } from './../../functions/router';
 
 const SIZES = {
   w: 800,
   h: 600,
 };
-
-enum Colour {
-  RED = 'red',
-  BLUE = 'blue',
-  ORANGE = 'orange',
-  GREEN = 'green',
-}
 
 const CANVAS_SCENE = 'basic-scene-canvas';
 
@@ -22,18 +17,20 @@ export class BasicScene {
 
   // Geometries
   private readonly cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+  private readonly coneGeometry = new THREE.ConeGeometry(1, 1, 5);
 
   // Materials
   private readonly flatRedMaterial = new THREE.MeshBasicMaterial({ color: Colour.RED });
   private readonly flatBlueMaterial = new THREE.MeshBasicMaterial({ color: Colour.BLUE });
   private readonly flatOrangeMaterial = new THREE.MeshBasicMaterial({ color: Colour.ORANGE });
   private readonly flatGreenMaterial = new THREE.MeshBasicMaterial({ color: Colour.GREEN });
+  private readonly flatPinkMaterial = new THREE.MeshBasicMaterial({ color: Colour.PINK });
+  private readonly flatPurpleMaterial = new THREE.MeshBasicMaterial({ color: Colour.PURPLE });
 
   // Cameras
-  private readonly perspectiveCamera = new THREE.PerspectiveCamera(100, SIZES.w / SIZES.h);
+  private readonly perspectiveCamera = new THREE.PerspectiveCamera(90, SIZES.w / SIZES.h);
 
-  private readonly cubes: THREE.Mesh[] = [];
-  private readonly cubeGroup = new THREE.Group();
+  private readonly meshCollection: THREE.Mesh[] = [];
   private renderer: THREE.WebGLRenderer;
 
   constructor() {
@@ -43,9 +40,9 @@ export class BasicScene {
 
   private init(): void {
     if (!this.scene) return;
-    this.scene.add(this.cubeGroup);
     this.scene.add(this.perspectiveCamera);
-    this.buildAndAddCubes();
+    this.buildCubesAndCones(50);
+    this.randomlyPlaceMesh();
 
     const canvas = document.getElementById(CANVAS_SCENE) as HTMLCanvasElement;
 
@@ -55,14 +52,12 @@ export class BasicScene {
     });
     this.renderer.setSize(SIZES.w, SIZES.h);
     this.tick();
-    this.spinTheCubes();
   }
 
-  private buildAndAddCubes(): void {
-    for (let i = 0; i < 20; i++) {
-      const colourNumber = Math.floor(Math.random() * 5);
+  private buildCubesAndCones(number = 20): void {
+    for (let i = 0; i < number; i++) {
+      const colourNumber = Math.floor(Math.random() * Object.keys(Colour).length) + 1;
       let material: MeshBasicMaterial;
-
       switch (colourNumber) {
         case 1:
           material = this.flatBlueMaterial;
@@ -76,15 +71,24 @@ export class BasicScene {
         case 4:
           material = this.flatOrangeMaterial;
           break;
+        case 5:
+          material = this.flatPinkMaterial;
+          break;
+        case 6:
+          material = this.flatPurpleMaterial;
+          break;
       }
       const cubeMesh = new THREE.Mesh(this.cubeGeometry, material);
-      this.cubes.push(cubeMesh);
+      const coneMesh = new THREE.Mesh(this.coneGeometry, material);
+      this.meshCollection.push(cubeMesh);
+      this.meshCollection.push(coneMesh);
       this.scene.add(cubeMesh);
+      this.scene.add(coneMesh);
     }
   }
 
   private tick(): void {
-    this.spinTheCubes();
+    this.spinAndTranslateMesh();
     this.renderer.render(this.scene, this.perspectiveCamera);
     requestAnimationFrame(this.tick.bind(this));
   }
@@ -95,19 +99,42 @@ export class BasicScene {
     );
   }
 
-  private spinTheCubes(): void {
-    for (const cube of this.cubes) {
+  private randomlyPlaceMesh() {
+    for (const cube of this.meshCollection) {
       cube.position.set(
-        this.mathRandomNegativePositivePosition(15),
-        this.mathRandomNegativePositivePosition(15),
+        this.mathRandomNegativePositivePosition(25),
+        this.mathRandomNegativePositivePosition(25),
         this.mathRandomNegativePositivePosition(2)
       );
-      cube.rotation.set(
-        this.mathRandomNegativePositivePosition(360),
-        this.mathRandomNegativePositivePosition(360),
-        this.mathRandomNegativePositivePosition(360)
-      );
-      this.perspectiveCamera.lookAt(this.cubes[Math.floor(Math.random() * 21)].position);
+    }
+  }
+
+  private meshBoundaries(mesh: THREE.Mesh, coordinates: number, axisY = false): void {
+    const xOrY = axisY ? Axis.Y : Axis.X;
+    if (mesh.position[xOrY] >= coordinates) {
+      mesh.position[xOrY] += -coordinates * 2;
+    }
+
+    if (mesh.position[xOrY] <= -coordinates) {
+      mesh.position[xOrY] += coordinates * 2;
+    }
+  }
+
+  private rotateMesh(mesh, rotationFactor = 0.05): void {
+    mesh.rotateX(Math.random() * rotationFactor);
+    mesh.rotateY(Math.random() * rotationFactor);
+    mesh.rotateZ(Math.random() * rotationFactor);
+  }
+
+  private spinAndTranslateMesh(): void {
+    let counter = 0;
+    for (const mesh of this.meshCollection) {
+      counter++;
+      this.meshBoundaries(mesh, 25);
+      mesh.position.x += counter % 2 === 0 ? Math.random() * 0.1 : -(Math.random() * 0.2);
+      this.meshBoundaries(mesh, 18, true);
+      mesh.position.y += counter % 2 === 0 ? Math.random() * 0.1 : -(Math.random() * 0.2);
+      this.rotateMesh(mesh);
     }
   }
 }
