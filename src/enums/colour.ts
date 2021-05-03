@@ -1,9 +1,11 @@
 export enum Colour {
-  RED = '#d32f2f',
   BLUE = '#303F9F',
-  ORANGE = '#F57C00',
   GREEN = '#388E3C',
+  ORANGE = '#F57C00',
   PINK = '#C2185B',
+  PURE_WHITE = '#F5F5F5',
   PURPLE = '#7B1FA2',
-  WHITE = '#EEEEEE',
+  RED = '#d32f2f',
+  SOFTER_WHITE = '#E0E0E0',
+  SOFT_WHITE = '#EEEEEE',
 }
