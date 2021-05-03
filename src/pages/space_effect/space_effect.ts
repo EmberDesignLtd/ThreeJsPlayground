@@ -43,21 +43,27 @@ export class SpaceEffect {
     requestAnimationFrame(this.tick.bind(this));
   }
 
+  // TODO(Munro): Look into a cleaner way to set all this up feels a little convoluted right now.
   private init(): void {
     if (!this.scene) return;
     this.createStarParticles();
     this.randomlyPlaceStars();
     this.scene.add(this.perspectiveCamera);
     this.setupCanvasAndOrbiter();
-    resizeCanvasListener(this.renderer, this.perspectiveCamera);
-    this.tick();
   }
 
+  // TODO(Munro): Look into a cleaner way to set all this up feels a little convoluted right now.
   private setupCanvasAndOrbiter(): void {
-    const { canvas, renderer } = setupCanvas(Element.CANVAS_SCENE);
-    if (!canvas || !renderer) return;
+    const canvasAndRenderer = setupCanvas(Element.CANVAS_SCENE);
+    if (!canvasAndRenderer || !canvasAndRenderer.canvas || !canvasAndRenderer.renderer) return;
+    const { canvas, renderer } = canvasAndRenderer;
     this.renderer = renderer;
+
+    // Calling these in init throws errors while it waits for the canvas & renderer to be instantiated
+    // TODO(Munro): Look into a cleaner way to set all this up feels a little convoluted right now.
     addOrbitControls(canvas, this.perspectiveCamera);
+    resizeCanvasListener(this.renderer, this.perspectiveCamera);
+    this.tick();
   }
 
   private createStarMaterial(): MeshBasicMaterial {

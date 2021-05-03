@@ -14,7 +14,7 @@ export const addOrbitControls = (canvas: HTMLCanvasElement, camera: THREE.Camera
 
 export const setupCanvas = (
   canvasElementSelector: string
-): { canvas: HTMLCanvasElement; renderer: THREE.WebGLRenderer } => {
+): { canvas: HTMLCanvasElement; renderer: THREE.WebGLRenderer } | undefined => {
   const canvas = document.getElementById(canvasElementSelector) as HTMLCanvasElement;
   if (!canvas) return;
   const renderer = new THREE.WebGLRenderer({
