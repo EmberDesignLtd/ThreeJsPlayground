@@ -5,16 +5,26 @@ import { addOrbitControls, resizeCanvasListener, setupCanvas } from '../function
 export class VanillaCanvas {
   private withOrbiter = false;
   readonly scene = new THREE.Scene();
-  readonly perspectiveCamera = new THREE.PerspectiveCamera(
-    30,
-    window.innerWidth / window.innerHeight
-  );
+  readonly perspectiveCamera: THREE.PerspectiveCamera;
   renderer: THREE.WebGLRenderer;
   canvasElementSelector: string;
 
-  constructor(canvasElementSelector: string, withOrbiter = false) {
+  constructor(
+    canvasElementSelector: string,
+    withOrbiter = false,
+    cameraProperties = {
+      fov: 70,
+      aspect: window.innerWidth / window.innerHeight,
+      near: 0.1,
+      far: 80,
+    }
+  ) {
     this.canvasElementSelector = canvasElementSelector;
     this.withOrbiter = withOrbiter;
+    this.perspectiveCamera = new THREE.PerspectiveCamera(
+      cameraProperties.fov,
+      cameraProperties.aspect
+    );
     this.perspectiveCamera.position.set(0, 0, 10);
     routeChange$.subscribe(this.setupCanvasAndOrbiter.bind(this));
   }
