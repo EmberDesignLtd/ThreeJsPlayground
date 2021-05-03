@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { Colour } from './../enums/colour';
 import { Event } from './../enums/events';
 
 export const mathRandomNegativePositivePosition = (range: number): number => {
@@ -34,4 +35,14 @@ export const resizeCanvasListener = (
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
   });
+};
+
+export const createTestCube = (scene: THREE.Scene) => {
+  const material = new THREE.MeshBasicMaterial({ color: Colour.RED });
+  const boxGeometry = new THREE.BoxGeometry(2, 2, 2);
+  const mesh = new THREE.Mesh(boxGeometry, material);
+  mesh.rotation.x = 0.2;
+  mesh.rotation.y = 0.5;
+  scene.add(mesh);
+  return mesh;
 };
