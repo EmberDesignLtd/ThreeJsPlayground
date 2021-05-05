@@ -13,7 +13,7 @@ export class VanillaCanvas {
     canvasElementSelector: string,
     withOrbiter = false,
     cameraProperties = {
-      fov: 70,
+      fov: 80,
       aspect: window.innerWidth / window.innerHeight,
       near: 0.1,
       far: 80,
