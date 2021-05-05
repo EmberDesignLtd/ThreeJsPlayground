@@ -9,7 +9,7 @@ const ROUTER_OUTLET = 'router-outlet';
  */
 export const routeChange$ = new BehaviorSubject(null);
 
-export const route = (pageLocation: string = Route.SPACE_SCENE) => {
+export const route = (pageLocation: string = Route.TEXTURE_SCENE) => {
   fetch(pageLocation)
     .then((data) => data.text())
     .then((html) => {
