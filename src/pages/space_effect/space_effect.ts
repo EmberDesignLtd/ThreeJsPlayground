@@ -17,9 +17,11 @@ export class SpaceEffect {
   private readonly starMeshes: THREE.Mesh[] = [];
   private zAxisBoundary = 5;
   private canvas: VanillaCanvas;
+  canvasElement = document.getElementById(Element.CANVAS_SCENE) as HTMLCanvasElement;
 
   constructor() {
-    this.canvas = new VanillaCanvas(Element.CANVAS_SCENE, true);
+    this.canvas = new VanillaCanvas(this.canvasElement, true);
+    if (!this.canvasElement) return;
     routeChange$.subscribe(this.init.bind(this));
   }
 

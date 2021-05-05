@@ -13,14 +13,17 @@ export class DatGuiExample {
   testCube: THREE.Mesh;
   mouseCoordinates = new MouseCoordinates();
   cursorPosition = { x: 0, y: 0 };
-  debugGui = new DatGuiHelper();
+  debugGui: DatGuiHelper;
+  canvasElement = document.getElementById(Element.DAT_GUI_CANVAS) as HTMLCanvasElement;
 
   constructor() {
     this.mouseCoordinates.coordinates$.subscribe((cursorPosition) => {
       this.cursorPosition = cursorPosition;
     });
-    this.canvas = new VanillaCanvas(Element.DAT_GUI_CANVAS, true);
+    this.canvas = new VanillaCanvas(this.canvasElement, true);
+    if (!this.canvasElement) return;
     this.testCube = createTestCube(this.canvas.scene);
+    this.debugGui = new DatGuiHelper();
     this.debugGui.addAllControls(this.testCube);
     this.tick();
   }

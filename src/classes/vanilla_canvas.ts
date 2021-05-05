@@ -7,10 +7,10 @@ export class VanillaCanvas {
   readonly scene = new THREE.Scene();
   readonly perspectiveCamera: THREE.PerspectiveCamera;
   renderer: THREE.WebGLRenderer;
-  canvasElementSelector: string;
+  canvasElementSelector: HTMLCanvasElement;
 
   constructor(
-    canvasElementSelector: string,
+    canvasElementSelector: HTMLCanvasElement,
     withOrbiter = false,
     cameraProperties = {
       fov: 80,
@@ -35,12 +35,13 @@ export class VanillaCanvas {
 
     // Setup canvas and renderer
     const canvasAndRenderer = setupCanvas(this.canvasElementSelector);
-    if (!canvasAndRenderer || !canvasAndRenderer.canvas || !canvasAndRenderer.renderer) return;
-    const { canvas, renderer } = canvasAndRenderer;
+    if (!canvasAndRenderer || !canvasAndRenderer.canvasElement || !canvasAndRenderer.renderer)
+      return;
+    const { canvasElement, renderer } = canvasAndRenderer;
     this.renderer = renderer;
 
     if (this.withOrbiter) {
-      addOrbitControls(canvas, this.perspectiveCamera);
+      addOrbitControls(canvasElement, this.perspectiveCamera);
     }
 
     resizeCanvasListener(this.renderer, this.perspectiveCamera);

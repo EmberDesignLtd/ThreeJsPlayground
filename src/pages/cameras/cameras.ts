@@ -12,12 +12,14 @@ export class ThreeCameraPlayground {
   testCube: THREE.Mesh;
   mouseCoordinates = new MouseCoordinates();
   cursorPosition = { x: 0, y: 0 };
+  canvasElement = document.getElementById(Element.CAMERA_CANVAS) as HTMLCanvasElement;
 
   constructor() {
     this.mouseCoordinates.coordinates$.subscribe((cursorPosition) => {
       this.cursorPosition = cursorPosition;
     });
-    this.canvas = new VanillaCanvas(Element.CAMERA_CANVAS);
+    this.canvas = new VanillaCanvas(this.canvasElement, true);
+    if (!this.canvasElement) return;
     this.testCube = createTestCube(this.canvas.scene);
     this.tick();
   }
