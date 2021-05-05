@@ -10,7 +10,7 @@ export class DatGuiHelper {
     this.gui = new datGui.GUI();
   }
 
-  addAllControls(mesh: THREE.Mesh, meshMaterial: THREE.Material) {
+  addAllControls(mesh: THREE.Mesh, meshMaterial: THREE.Material | THREE.Material[]) {
     this.addXYZMeshControl(mesh);
     this.meshVisible(mesh);
     this.wireframeToggle(meshMaterial);
@@ -26,7 +26,7 @@ export class DatGuiHelper {
     this.gui.add(mesh, MeshProperty.VISIBLE);
   }
 
-  wireframeToggle(meshMaterial: THREE.Material) {
+  wireframeToggle(meshMaterial: THREE.Material | THREE.Material[]) {
     this.gui.add(meshMaterial, MeshProperty.WIREFRAME);
   }
 }

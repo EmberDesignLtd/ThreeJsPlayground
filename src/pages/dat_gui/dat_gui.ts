@@ -21,7 +21,7 @@ export class DatGuiExample {
     });
     this.canvas = new VanillaCanvas(Element.DAT_GUI_CANVAS, true);
     this.testCube = createTestCube(this.canvas.scene);
-    this.debugGui.addXYZMeshControl(this.testCube);
+    this.debugGui.addAllControls(this.testCube, this.testCube.material);
     this.tick();
   }
 
