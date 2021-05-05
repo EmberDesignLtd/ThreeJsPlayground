@@ -7,4 +7,5 @@ export enum Route {
   BASIC_SCENE = '../pages/basic_scene/basic_scene.html',
   SPACE_SCENE = '../pages/space_effect/space_effect.html',
   CAMERA_SCENE = '../pages/cameras/cameras.html',
+  DAT_GUI = '../pages/dat_gui/dat_gui.html',
 }
