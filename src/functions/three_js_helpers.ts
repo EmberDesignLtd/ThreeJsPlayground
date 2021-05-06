@@ -36,8 +36,10 @@ export const resizeCanvasListener = (
   });
 };
 
-export const createTestCube = (scene: THREE.Scene) => {
-  const material = new THREE.MeshBasicMaterial({ color: Colour.RED });
+export const createCube = (
+  scene: THREE.Scene,
+  material = new THREE.MeshBasicMaterial({ color: Colour.RED })
+): THREE.Mesh => {
   const boxGeometry = new THREE.BoxGeometry(2, 2, 2);
   const mesh = new THREE.Mesh(boxGeometry, material);
   mesh.rotation.x = 0.2;

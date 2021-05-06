@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { createTestCube } from '../../functions/three_js_helpers';
+import { createCube } from '../../functions/three_js_helpers';
 import { MouseCoordinates } from './../../classes/mouse_cordinates';
 import { VanillaCanvas } from './../../classes/vanilla_canvas';
 
@@ -20,7 +20,7 @@ export class ThreeCameraPlayground {
     });
     this.canvas = new VanillaCanvas(this.canvasElement, true);
     if (!this.canvasElement) return;
-    this.testCube = createTestCube(this.canvas.scene);
+    this.testCube = createCube(this.canvas.scene);
     this.tick();
   }
 

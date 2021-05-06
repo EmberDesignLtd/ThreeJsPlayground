@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { createTestCube } from '../../functions/three_js_helpers';
+import { createCube } from '../../functions/three_js_helpers';
 import { DatGuiHelper } from './../../classes/dat_gui_helper';
 import { MouseCoordinates } from './../../classes/mouse_cordinates';
 import { VanillaCanvas } from './../../classes/vanilla_canvas';
@@ -22,7 +22,7 @@ export class DatGuiExample {
     });
     this.canvas = new VanillaCanvas(this.canvasElement, true);
     if (!this.canvasElement) return;
-    this.testCube = createTestCube(this.canvas.scene);
+    this.testCube = createCube(this.canvas.scene);
     this.debugGui = new DatGuiHelper();
     this.debugGui.addAllControls(this.testCube);
     this.tick();
