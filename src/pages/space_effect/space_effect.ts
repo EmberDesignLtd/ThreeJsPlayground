@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import { MeshBasicMaterial } from 'three';
 import { Colour } from '../../enums/colour';
-import { routeChange$ } from '../../functions/router';
 import { mathRandomNegativePositivePosition } from '../../functions/three_js_helpers';
 import { VanillaCanvas } from './../../classes/vanilla_canvas';
 
@@ -14,15 +13,16 @@ enum Element {
  * you decide to reuse this class, at the moment its fine as you're just experimenting.
  */
 export class SpaceEffect {
+  private readonly canvasElement = document.getElementById(
+    Element.CANVAS_SCENE
+  ) as HTMLCanvasElement;
+  private readonly canvas = new VanillaCanvas(this.canvasElement, true);
   private readonly starMeshes: THREE.Mesh[] = [];
-  private zAxisBoundary = 5;
-  private canvas: VanillaCanvas;
-  canvasElement = document.getElementById(Element.CANVAS_SCENE) as HTMLCanvasElement;
+  private readonly zAxisBoundary = 5;
 
   constructor() {
-    this.canvas = new VanillaCanvas(this.canvasElement, true);
     if (!this.canvasElement) return;
-    routeChange$.subscribe(this.init.bind(this));
+    this.init();
   }
 
   private init() {
