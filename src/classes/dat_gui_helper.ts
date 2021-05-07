@@ -25,6 +25,7 @@ export class DatGuiHelper {
     this.specularControl(mesh.material);
     this.metalnessControl(mesh.material);
     this.ambientOcclusionIntensityControl(mesh.material);
+    this.displacementStengthControl(mesh.material);
   }
 
   addXYZMeshControl(mesh: THREE.Mesh, label?: string): void {
@@ -70,6 +71,11 @@ export class DatGuiHelper {
   metalnessControl(meshMaterial: THREE.Material | THREE.Material[]): void {
     if (!this.hasKey(meshMaterial, MeshProperty.METALNESS)) return;
     this.gui.add(meshMaterial, MeshProperty.METALNESS, 0, 1, 0.01);
+  }
+
+  displacementStengthControl(meshMaterial: THREE.Material | THREE.Material[]): void {
+    if (!this.hasKey(meshMaterial, MeshProperty.DISPLACEMENT_STRENGTH)) return;
+    this.gui.add(meshMaterial, MeshProperty.DISPLACEMENT_STRENGTH, -1, 1, 0.01);
   }
 
   ambientOcclusionIntensityControl(meshMaterial: THREE.Material | THREE.Material[]): void {
