@@ -3,6 +3,7 @@ import { BasicScene } from '../pages/basic_scene/basic_scene';
 import { ThreeCameraPlayground } from '../pages/cameras/cameras';
 import { DatGuiExample } from '../pages/dat_gui/dat_gui';
 import { Homepage } from '../pages/homepage/homepage';
+import { IntermediateTexturesExample } from '../pages/intermediate_textures/intermediate_textures';
 import { MaterialAndTextureExample } from '../pages/material_and_textures/material_and_textures';
 import { SpaceEffect } from '../pages/space_effect/space_effect';
 import { TexturesExample } from '../pages/textures/textures';
@@ -16,7 +17,7 @@ const ROUTER_OUTLET = 'router-outlet';
  */
 export const routeChange$ = new BehaviorSubject(null);
 
-export const route = (pageLocation: string = Route.MATERIAL_AND_TEXTURES_SCENE) => {
+export const route = (pageLocation: string = Route.INTERMEDIATE_TEXTURE_SCENE) => {
   fetch(pageLocation)
     .then((data) => data.text())
     .then((html) => {
@@ -29,5 +30,6 @@ export const route = (pageLocation: string = Route.MATERIAL_AND_TEXTURES_SCENE) 
       new DatGuiExample();
       new TexturesExample();
       new MaterialAndTextureExample();
+      new IntermediateTexturesExample();
     });
 };
