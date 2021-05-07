@@ -27,14 +27,14 @@ export class MaterialAndTextureExample {
     this.tick();
   }
 
-  private addMeshesToGroup() {
+  private addMeshesToGroup(): void {
     this.group.add(this.plane);
     this.group.add(this.torus);
     this.group.add(this.sphere);
     this.group.position.x = -2;
   }
 
-  private spaceMeshesOut() {
+  private spaceMeshesOut(): void {
     this.plane.position.x = 2;
     this.torus.position.x = 4;
     this.sphere.position.y = 4.5;
