@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { THREEMaterial } from '../types/three_material';
 import { Colour } from './../enums/colour';
 import { Event } from './../enums/events';
 
@@ -38,9 +39,10 @@ export const resizeCanvasListener = (
 
 export const createCube = (
   scene: THREE.Scene,
-  material = new THREE.MeshBasicMaterial({ color: Colour.RED })
+  material: THREEMaterial = new THREE.MeshBasicMaterial({ color: Colour.RED }),
+  dimensions = 2
 ): THREE.Mesh => {
-  const mesh = new THREE.Mesh(new THREE.BoxGeometry(2, 2, 2), material);
+  const mesh = new THREE.Mesh(new THREE.BoxGeometry(dimensions, dimensions, dimensions), material);
   mesh.position.y = 4;
   scene.add(mesh);
   return mesh;
@@ -48,7 +50,9 @@ export const createCube = (
 
 export const createSphere = (
   scene: THREE.Scene,
-  material = new THREE.MeshBasicMaterial({ color: Colour.RED })
+  material: THREEMaterial = new THREE.MeshBasicMaterial({
+    color: Colour.RED,
+  })
 ): THREE.Mesh => {
   const sphereMesh = new THREE.Mesh(new THREE.SphereGeometry(0.5, 16, 16), material);
   sphereMesh.position.y = 4;
@@ -58,7 +62,7 @@ export const createSphere = (
 
 export const createPlane = (
   scene: THREE.Scene,
-  material = new THREE.MeshBasicMaterial({ color: Colour.RED })
+  material: THREEMaterial = new THREE.MeshBasicMaterial({ color: Colour.RED })
 ): THREE.Mesh => {
   const planeMesh = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), material);
   planeMesh.position.y = 4;
@@ -68,7 +72,7 @@ export const createPlane = (
 
 export const createTorus = (
   scene: THREE.Scene,
-  material = new THREE.MeshBasicMaterial({ color: Colour.RED })
+  material: THREEMaterial = new THREE.MeshBasicMaterial({ color: Colour.RED })
 ): THREE.Mesh => {
   const torusMesh = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.2, 16, 32), material);
   torusMesh.position.y = 4;
