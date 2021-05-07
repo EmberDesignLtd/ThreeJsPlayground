@@ -1,9 +1,11 @@
 import * as THREE from 'three';
 import { Vector2 } from 'three';
 import { DoorTexture } from '../../enums/door_textures';
+import { EnvironmentMap0 } from '../../enums/environment_map';
 import { createCube } from '../../functions/three_js_helpers';
 import { DatGuiHelper } from './../../classes/dat_gui_helper';
 import { VanillaCanvas } from './../../classes/vanilla_canvas';
+import { EnvironmentMap1 } from './../../enums/environment_map';
 import { createSphere } from './../../functions/three_js_helpers';
 
 enum Element {
@@ -32,6 +34,26 @@ export class IntermediateTexturesExample {
   private readonly doorTexture = this.textureLoader.load(DoorTexture.COLOUR);
   private readonly doorAlpha = this.textureLoader.load(DoorTexture.ALPHA);
 
+  // Environment Textures
+  private readonly cubeTextureLoader = new THREE.CubeTextureLoader();
+  // Positive x/y/z and negative x/y/z
+  private environmentTextureMapOne = this.cubeTextureLoader.load([
+    EnvironmentMap0.PX,
+    EnvironmentMap0.NX,
+    EnvironmentMap0.PY,
+    EnvironmentMap0.NY,
+    EnvironmentMap0.PZ,
+    EnvironmentMap0.NZ,
+  ]);
+  private environmentTextureMapTwo = this.cubeTextureLoader.load([
+    EnvironmentMap1.PX,
+    EnvironmentMap1.NX,
+    EnvironmentMap1.PY,
+    EnvironmentMap1.NY,
+    EnvironmentMap1.PZ,
+    EnvironmentMap1.NZ,
+  ]);
+
   // Meshes
   private readonly doorCube = createCube(
     this.canvas.scene,
@@ -55,20 +77,30 @@ export class IntermediateTexturesExample {
     15
   );
 
-  private readonly doorSphere = createSphere(
+  // MeshPhysicalMaterial Provides a shinier clear coat to the mesh good for things like marbles
+  // golf balls ect, in this case we want a shinier reflection from the environmentMap
+  private readonly environmentSphere = createSphere(
     this.canvas.scene,
-    new THREE.MeshStandardMaterial({
-      map: this.doorTexture,
-      aoMap: this.doorAmbientOcclusion,
-      aoMapIntensity: 1,
-      displacementMap: this.doorHeight,
-      displacementScale: 0.2,
+    new THREE.MeshPhysicalMaterial({
+      metalness: 1,
+      roughness: 0.2,
+      envMap: this.environmentTextureMapOne,
+    })
+  );
+
+  private readonly environmentSphereTwo = createSphere(
+    this.canvas.scene,
+    new THREE.MeshPhysicalMaterial({
+      metalness: 1,
+      roughness: 0,
+      envMap: this.environmentTextureMapTwo,
     })
   );
 
   constructor() {
     if (!this.canvasElement) return;
-    this.doorSphere.position.x = 3;
+    this.environmentSphere.position.x = 3;
+    this.environmentSphereTwo.position.x = -3;
     console.log(this.doorCube);
     this.canvas.addSceneLighting();
     this.datGui = new DatGuiHelper();
