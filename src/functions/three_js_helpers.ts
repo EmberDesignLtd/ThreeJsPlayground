@@ -40,9 +40,13 @@ export const resizeCanvasListener = (
 export const createCube = (
   scene: THREE.Scene,
   material: THREEMaterial = new THREE.MeshBasicMaterial({ color: Colour.RED }),
-  dimensions = 2
+  dimensions = 2,
+  segments = 10
 ): THREE.Mesh => {
-  const mesh = new THREE.Mesh(new THREE.BoxGeometry(dimensions, dimensions, dimensions), material);
+  const mesh = new THREE.Mesh(
+    new THREE.BoxGeometry(dimensions, dimensions, dimensions, segments, segments, segments),
+    material
+  );
   mesh.position.y = 4;
   scene.add(mesh);
   return mesh;
@@ -54,7 +58,7 @@ export const createSphere = (
     color: Colour.RED,
   })
 ): THREE.Mesh => {
-  const sphereMesh = new THREE.Mesh(new THREE.SphereGeometry(0.5, 16, 16), material);
+  const sphereMesh = new THREE.Mesh(new THREE.SphereGeometry(0.5, 64, 64), material);
   sphereMesh.position.y = 4;
   scene.add(sphereMesh);
   return sphereMesh;
@@ -74,7 +78,7 @@ export const createTorus = (
   scene: THREE.Scene,
   material: THREEMaterial = new THREE.MeshBasicMaterial({ color: Colour.RED })
 ): THREE.Mesh => {
-  const torusMesh = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.2, 16, 32), material);
+  const torusMesh = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.2, 64, 128), material);
   torusMesh.position.y = 4;
   scene.add(torusMesh);
   return torusMesh;
