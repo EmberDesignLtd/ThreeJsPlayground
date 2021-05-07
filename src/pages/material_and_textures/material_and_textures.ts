@@ -27,7 +27,7 @@ export class MaterialAndTextureExample {
   private readonly canvas = new VanillaCanvas(this.canvasElement, true);
 
   // Debug UI
-  private readonly datGUI = new DatGuiHelper();
+  private readonly datGUI: DatGuiHelper;
 
   // Texture loader
   private readonly textureLoader = new THREE.TextureLoader();
@@ -109,6 +109,7 @@ export class MaterialAndTextureExample {
     this.addMeshesToGroup();
     this.setPointLightPosition();
     this.minecraftDiamondTexture.magFilter = THREE.NearestFilter;
+    this.datGUI = new DatGuiHelper();
     this.datGUI.addAllControls(this.cube);
     this.datGUI.addAllControls(this.cube_2);
     this.canvas.scene.add(this.group);
