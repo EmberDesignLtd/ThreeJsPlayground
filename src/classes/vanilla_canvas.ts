@@ -13,10 +13,10 @@ export class VanillaCanvas {
     canvasElementSelector: HTMLCanvasElement,
     withOrbiter = false,
     cameraProperties = {
-      fov: 80,
+      fov: 45,
       aspect: window.innerWidth / window.innerHeight,
       near: 0.1,
-      far: 80,
+      far: 100,
     }
   ) {
     this.canvasElementSelector = canvasElementSelector;
@@ -25,7 +25,7 @@ export class VanillaCanvas {
       cameraProperties.fov,
       cameraProperties.aspect
     );
-    this.perspectiveCamera.position.set(0, 0, 10);
+    this.perspectiveCamera.position.set(0, 5, 10);
     routeChange$.subscribe(this.setupCanvasAndOrbiter.bind(this));
   }
 
