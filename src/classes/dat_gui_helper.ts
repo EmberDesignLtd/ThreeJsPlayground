@@ -24,6 +24,7 @@ export class DatGuiHelper {
     this.shininessControl(mesh.material);
     this.specularControl(mesh.material);
     this.metalnessControl(mesh.material);
+    this.ambientOcclusionIntensityControl(mesh.material);
   }
 
   addXYZMeshControl(mesh: THREE.Mesh, label?: string): void {
@@ -69,6 +70,11 @@ export class DatGuiHelper {
   metalnessControl(meshMaterial: THREE.Material | THREE.Material[]): void {
     if (!this.hasKey(meshMaterial, MeshProperty.METALNESS)) return;
     this.gui.add(meshMaterial, MeshProperty.METALNESS, 0, 1, 0.01);
+  }
+
+  ambientOcclusionIntensityControl(meshMaterial: THREE.Material | THREE.Material[]): void {
+    if (!this.hasKey(meshMaterial, MeshProperty.AMBIENT_OCCLUSION_INTENSITY)) return;
+    this.gui.add(meshMaterial, MeshProperty.AMBIENT_OCCLUSION_INTENSITY, 0, 2, 0.01);
   }
 
   private hasKey(meshMaterial: THREE.Material | THREE.Material[], key: MeshProperty): boolean {

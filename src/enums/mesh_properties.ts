@@ -5,4 +5,5 @@ export enum MeshProperty {
   ROUGHNESS = 'roughness',
   SPECULAR = 'specular',
   METALNESS = 'metalness',
+  AMBIENT_OCCLUSION_INTENSITY = 'aoMapIntensity',
 }
