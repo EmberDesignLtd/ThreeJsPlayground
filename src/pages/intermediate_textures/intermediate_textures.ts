@@ -3,6 +3,7 @@ import { DoorTexture } from '../../enums/door_textures';
 import { createCube } from '../../functions/three_js_helpers';
 import { DatGuiHelper } from './../../classes/dat_gui_helper';
 import { VanillaCanvas } from './../../classes/vanilla_canvas';
+import { createSphere } from './../../functions/three_js_helpers';
 
 enum Element {
   TEXTURE_CANVAS = 'intermediate-texture-canvas',
@@ -21,20 +22,39 @@ export class IntermediateTexturesExample {
   private readonly textureLoader = new THREE.TextureLoader();
   // Used to colour the recesses of the door texture
   private readonly doorAmbientOcclusion = this.textureLoader.load(DoorTexture.AMBIENT_OCCLUSION);
+  // Used to render 3D depth to the door texture
+  private readonly doorHeight = this.textureLoader.load(DoorTexture.HEIGHT);
   private readonly doorTexture = this.textureLoader.load(DoorTexture.COLOUR);
 
   // Meshes
   private readonly doorCube = createCube(
     this.canvas.scene,
-    new THREE.MeshBasicMaterial({
+    new THREE.MeshStandardMaterial({
       map: this.doorTexture,
       aoMap: this.doorAmbientOcclusion,
       aoMapIntensity: 1,
+      displacementMap: this.doorHeight,
+      displacementScale: 0.2,
+    }),
+    2,
+    15
+  );
+
+  private readonly doorSphere = createSphere(
+    this.canvas.scene,
+    new THREE.MeshStandardMaterial({
+      map: this.doorTexture,
+      aoMap: this.doorAmbientOcclusion,
+      aoMapIntensity: 1,
+      displacementMap: this.doorHeight,
+      displacementScale: 0.2,
     })
   );
 
   constructor() {
     if (!this.canvasElement) return;
+    this.doorSphere.position.x = 3;
+    console.log(this.doorCube);
     this.canvas.addSceneLighting();
     this.datGui = new DatGuiHelper();
     this.datGui.addAllControls(this.doorCube);
