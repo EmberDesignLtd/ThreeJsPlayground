@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { Vector2 } from 'three';
 import { DoorTexture } from '../../enums/door_textures';
 import { createCube } from '../../functions/three_js_helpers';
 import { DatGuiHelper } from './../../classes/dat_gui_helper';
@@ -24,7 +25,12 @@ export class IntermediateTexturesExample {
   private readonly doorAmbientOcclusion = this.textureLoader.load(DoorTexture.AMBIENT_OCCLUSION);
   // Used to render 3D depth to the door texture
   private readonly doorHeight = this.textureLoader.load(DoorTexture.HEIGHT);
+  // Add detail/depth to the material without the need for a high vertices/subdivison number on the mesh
+  private readonly doorNormalMap = this.textureLoader.load(DoorTexture.DETAIL);
+  private readonly doorRoughness = this.textureLoader.load(DoorTexture.ROUGHNESS);
+  private readonly doorMetalness = this.textureLoader.load(DoorTexture.METALNESS);
   private readonly doorTexture = this.textureLoader.load(DoorTexture.COLOUR);
+  private readonly doorAlpha = this.textureLoader.load(DoorTexture.ALPHA);
 
   // Meshes
   private readonly doorCube = createCube(
@@ -34,7 +40,16 @@ export class IntermediateTexturesExample {
       aoMap: this.doorAmbientOcclusion,
       aoMapIntensity: 1,
       displacementMap: this.doorHeight,
-      displacementScale: 0.2,
+      displacementScale: 0.15,
+      metalnessMap: this.doorMetalness,
+      roughnessMap: this.doorRoughness,
+      normalMap: this.doorNormalMap,
+      // Set the detail strength of the normal map
+      normalScale: new Vector2(1, 1),
+      // Required when using alpha maps
+      transparent: true,
+      // My only note here is for hit detection does it actually crop the mesh or just hide it?
+      alphaMap: this.doorAlpha,
     }),
     2,
     15

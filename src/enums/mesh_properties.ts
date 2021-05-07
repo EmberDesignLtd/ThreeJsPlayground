@@ -7,4 +7,5 @@ export enum MeshProperty {
   SPECULAR = 'specular',
   VISIBLE = 'visible',
   WIREFRAME = 'wireframe',
+  NORMAL_STRENGTH = 'normalScale',
 }
