@@ -31,7 +31,7 @@ export class VanillaCanvas {
 
   private setupCanvasAndOrbiter(): void {
     if (!this.scene) return;
-    this.scene.add(this.perspectiveCamera);
+    // this.scene.add(this.perspectiveCamera);
 
     // Setup canvas and renderer
     const canvasAndRenderer = setupCanvas(this.canvasElementSelector);
