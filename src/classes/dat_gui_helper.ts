@@ -20,6 +20,10 @@ export class DatGuiHelper {
     this.meshVisible(mesh);
     this.wireframeToggle(mesh.material);
     this.colourControl(mesh.material);
+    this.roughnessControl(mesh.material);
+    this.shininessControl(mesh.material);
+    this.specularControl(mesh.material);
+    this.metalnessControl(mesh.material);
   }
 
   addXYZMeshControl(mesh: THREE.Mesh, label?: string): void {
@@ -45,5 +49,29 @@ export class DatGuiHelper {
       // @ts-ignore
       meshMaterial.color.set(materialColour.color);
     });
+  }
+
+  roughnessControl(meshMaterial: THREE.Material | THREE.Material[]): void {
+    if (!this.hasKey(meshMaterial, MeshProperty.ROUGHNESS)) return;
+    this.gui.add(meshMaterial, MeshProperty.ROUGHNESS, 0, 1, 0.01);
+  }
+
+  shininessControl(meshMaterial: THREE.Material | THREE.Material[]): void {
+    if (!this.hasKey(meshMaterial, MeshProperty.SHININESS)) return;
+    this.gui.add(meshMaterial, MeshProperty.SHININESS, 0, 1, 0.01);
+  }
+
+  specularControl(meshMaterial: THREE.Material | THREE.Material[]): void {
+    if (!this.hasKey(meshMaterial, MeshProperty.SPECULAR)) return;
+    this.gui.add(meshMaterial, MeshProperty.SPECULAR, 0, 1, 0.01);
+  }
+
+  metalnessControl(meshMaterial: THREE.Material | THREE.Material[]): void {
+    if (!this.hasKey(meshMaterial, MeshProperty.METALNESS)) return;
+    this.gui.add(meshMaterial, MeshProperty.METALNESS, 0, 1, 0.01);
+  }
+
+  private hasKey(meshMaterial: THREE.Material | THREE.Material[], key: MeshProperty): boolean {
+    return key in meshMaterial;
   }
 }
