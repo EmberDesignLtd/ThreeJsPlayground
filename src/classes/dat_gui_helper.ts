@@ -17,6 +17,7 @@ export class DatGuiHelper {
 
   addAllControls(mesh: THREE.Mesh): void {
     this.addXYZMeshControl(mesh);
+    this.addXYZRotationMeshControl(mesh);
     this.meshVisible(mesh);
     this.wireframeToggle(mesh.material);
     this.colourControl(mesh.material);
@@ -32,6 +33,12 @@ export class DatGuiHelper {
     this.gui.add(mesh.position, Axis.X, -10, 10, 0.01).name(label ? label : Axis.X);
     this.gui.add(mesh.position, Axis.Y, -10, 10, 0.01).name(label ? label : Axis.Y);
     this.gui.add(mesh.position, Axis.Z, -50, 50, 0.01).name(label ? label : Axis.Z);
+  }
+
+  addXYZRotationMeshControl(mesh: THREE.Mesh): void {
+    this.gui.add(mesh.rotation, Axis.X, -10, 10, 0.01).name(`Rotate ${Axis.X}`);
+    this.gui.add(mesh.rotation, Axis.Y, -10, 10, 0.01).name(`Rotate ${Axis.Y}`);
+    this.gui.add(mesh.rotation, Axis.Z, -50, 50, 0.01).name(`Rotate ${Axis.Z}`);
   }
 
   meshVisible(mesh: THREE.Mesh): void {
