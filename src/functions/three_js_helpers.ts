@@ -8,10 +8,15 @@ export const mathRandomNegativePositivePosition = (range: number): number => {
   return Math.random() * range * (Math.round(Math.random()) ? 1 : -1);
 };
 
-export const addOrbitControls = (canvas: HTMLCanvasElement, camera: THREE.Camera): void => {
+export const addOrbitControls = (
+  canvas: HTMLCanvasElement,
+  camera: THREE.Camera
+): OrbitControls => {
   const controls = new OrbitControls(camera, canvas);
   controls.target.set(0, 5, 0);
+  controls.autoRotate = true;
   controls.update();
+  return controls;
 };
 
 export const setupCanvas = (

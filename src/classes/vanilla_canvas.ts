@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { routeChange$ } from '../functions/router';
 import { addOrbitControls, resizeCanvasListener, setupCanvas } from '../functions/three_js_helpers';
 
@@ -6,6 +7,7 @@ export class VanillaCanvas {
   private withOrbiter = false;
   readonly scene = new THREE.Scene();
   readonly perspectiveCamera: THREE.PerspectiveCamera;
+  orbitControls: OrbitControls;
   renderer: THREE.WebGLRenderer;
   canvasElementSelector: HTMLCanvasElement;
 
@@ -41,7 +43,7 @@ export class VanillaCanvas {
     this.renderer = renderer;
 
     if (this.withOrbiter) {
-      addOrbitControls(canvasElement, this.perspectiveCamera);
+      this.orbitControls = addOrbitControls(canvasElement, this.perspectiveCamera);
     }
 
     resizeCanvasListener(this.renderer, this.perspectiveCamera);
@@ -52,7 +54,7 @@ export class VanillaCanvas {
     const pointLight = new THREE.PointLight(0xffffff, 0.5);
     pointLight.position.x = 2;
     pointLight.position.y = 3;
-    pointLight.position.z = 4;
+    pointLight.position.z = 0;
     this.scene.add(ambientLight);
     this.scene.add(pointLight);
   }
