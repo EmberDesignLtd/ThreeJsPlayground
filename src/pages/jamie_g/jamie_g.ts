@@ -35,6 +35,7 @@ export class JameiG {
 
   constructor() {
     if (!this.canvasElement) return;
+    this.canvas.orbitControls.autoRotate = true;
     this.createInitialSpheres();
     this.canvas.addSceneLighting();
     this.canvas.scene.add(this.jimJamGroup);
