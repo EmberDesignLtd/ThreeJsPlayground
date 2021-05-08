@@ -11,4 +11,5 @@ export enum Route {
   TEXTURE_SCENE = '../pages/textures/textures.html',
   MATERIAL_AND_TEXTURES_SCENE = '../pages/material_and_textures/material_and_textures.html',
   INTERMEDIATE_TEXTURE_SCENE = '../pages/intermediate_textures/intermediate_textures.html',
+  JAMIE_G = '../pages/jamie_g/jamie_g.html',
 }

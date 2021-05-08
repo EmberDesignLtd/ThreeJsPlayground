@@ -8,6 +8,7 @@ import { MaterialAndTextureExample } from '../pages/material_and_textures/materi
 import { SpaceEffect } from '../pages/space_effect/space_effect';
 import { TexturesExample } from '../pages/textures/textures';
 import { Route } from './../enums/routes';
+import { JameiG } from './../pages/jamie_g/jamie_g';
 
 const ROUTER_OUTLET = 'router-outlet';
 
@@ -17,7 +18,7 @@ const ROUTER_OUTLET = 'router-outlet';
  */
 export const routeChange$ = new BehaviorSubject(null);
 
-export const route = (pageLocation: string = Route.INTERMEDIATE_TEXTURE_SCENE) => {
+export const route = (pageLocation: string = Route.JAMIE_G) => {
   fetch(pageLocation)
     .then((data) => data.text())
     .then((html) => {
@@ -31,5 +32,6 @@ export const route = (pageLocation: string = Route.INTERMEDIATE_TEXTURE_SCENE) =
       new TexturesExample();
       new MaterialAndTextureExample();
       new IntermediateTexturesExample();
+      new JameiG();
     });
 };
