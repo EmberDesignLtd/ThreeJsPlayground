@@ -15,7 +15,7 @@ export class VanillaCanvas {
     canvasElementSelector: HTMLCanvasElement,
     withOrbiter = false,
     cameraProperties = {
-      fov: 45,
+      fov: 75,
       aspect: window.innerWidth / window.innerHeight,
       near: 0.1,
       far: 100,
@@ -27,13 +27,15 @@ export class VanillaCanvas {
       cameraProperties.fov,
       cameraProperties.aspect
     );
-    this.perspectiveCamera.position.set(0, 5, 10);
+    this.perspectiveCamera.position.x = 8;
+    this.perspectiveCamera.position.y = 5;
+    this.perspectiveCamera.position.z = 8;
+
     routeChange$.subscribe(this.setupCanvasAndOrbiter.bind(this));
   }
 
   private setupCanvasAndOrbiter(): void {
     if (!this.scene) return;
-    // this.scene.add(this.perspectiveCamera);
 
     // Setup canvas and renderer
     const canvasAndRenderer = setupCanvas(this.canvasElementSelector);
@@ -44,6 +46,8 @@ export class VanillaCanvas {
 
     if (this.withOrbiter) {
       this.orbitControls = addOrbitControls(canvasElement, this.perspectiveCamera);
+    } else {
+      this.scene.add(this.perspectiveCamera);
     }
 
     resizeCanvasListener(this.renderer, this.perspectiveCamera);
