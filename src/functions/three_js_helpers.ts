@@ -13,8 +13,6 @@ export const addOrbitControls = (
   camera: THREE.Camera
 ): OrbitControls => {
   const controls = new OrbitControls(camera, canvas);
-  controls.target.set(0, 5, 0);
-  controls.autoRotate = true;
   controls.update();
   return controls;
 };
@@ -33,12 +31,15 @@ export const resizeCanvasListener = (
   renderer: THREE.WebGLRenderer,
   camera: THREE.PerspectiveCamera
 ): void => {
-  renderer.setSize(window.innerWidth, window.innerHeight);
   // TODO(Munro): Add throttle function for performance improvement
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   window.addEventListener(Event.RESIZE, () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   });
 };
 
@@ -52,7 +53,6 @@ export const createCube = (
     new THREE.BoxGeometry(dimensions, dimensions, dimensions, segments, segments, segments),
     material
   );
-  mesh.position.y = 4;
   scene.add(mesh);
   return mesh;
 };
@@ -64,17 +64,17 @@ export const createSphere = (
   })
 ): THREE.Mesh => {
   const sphereMesh = new THREE.Mesh(new THREE.SphereGeometry(0.5, 64, 64), material);
-  sphereMesh.position.y = 4;
   scene.add(sphereMesh);
   return sphereMesh;
 };
 
 export const createPlane = (
   scene: THREE.Scene,
-  material: THREEMaterial = new THREE.MeshBasicMaterial({ color: Colour.RED })
+  material: THREEMaterial = new THREE.MeshBasicMaterial({ color: Colour.RED }),
+  width = 1,
+  height = 1
 ): THREE.Mesh => {
-  const planeMesh = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), material);
-  planeMesh.position.y = 4;
+  const planeMesh = new THREE.Mesh(new THREE.PlaneGeometry(width, height), material);
   scene.add(planeMesh);
   return planeMesh;
 };
@@ -84,7 +84,6 @@ export const createTorus = (
   material: THREEMaterial = new THREE.MeshBasicMaterial({ color: Colour.RED })
 ): THREE.Mesh => {
   const torusMesh = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.2, 64, 128), material);
-  torusMesh.position.y = 4;
   scene.add(torusMesh);
   return torusMesh;
 };
