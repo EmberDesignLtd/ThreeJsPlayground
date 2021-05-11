@@ -10,6 +10,8 @@ export class VanillaCanvas {
   orbitControls: OrbitControls;
   renderer: THREE.WebGLRenderer;
   canvasElementSelector: HTMLCanvasElement;
+  directionalLight: THREE.DirectionalLight;
+  ambientLight: THREE.AmbientLight;
 
   constructor(
     canvasElementSelector: HTMLCanvasElement,
@@ -54,12 +56,10 @@ export class VanillaCanvas {
   }
 
   addSceneLighting(): void {
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    const pointLight = new THREE.PointLight(0xffffff, 0.5);
-    pointLight.position.x = 2;
-    pointLight.position.y = 3;
-    pointLight.position.z = 0;
-    this.scene.add(ambientLight);
-    this.scene.add(pointLight);
+    this.ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    this.directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+    this.directionalLight.position.set(10, 10, 10);
+    this.scene.add(this.ambientLight);
+    this.scene.add(this.directionalLight);
   }
 }
