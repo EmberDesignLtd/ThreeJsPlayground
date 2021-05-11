@@ -46,6 +46,7 @@ export class VanillaCanvas {
     const { canvasElement, renderer } = canvasAndRenderer;
     this.renderer = renderer;
 
+    // TODO(Munro): If no orbit controls the perspective camera isn't centered fix this.
     if (this.withOrbiter) {
       this.orbitControls = addOrbitControls(canvasElement, this.perspectiveCamera);
     } else {
