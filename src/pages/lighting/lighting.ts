@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { VanillaCanvas } from '../../classes/vanilla_canvas';
-import { createCube, createPlane } from './../../functions/three_js_helpers';
+import { Colour } from './../../enums/colour';
+import { createPlane, createSphere } from './../../functions/three_js_helpers';
 
 enum Element {
   LIGHTING_CANVAS = 'lighting-canvas',
@@ -11,7 +12,10 @@ export class LightingExample {
     Element.LIGHTING_CANVAS
   ) as HTMLCanvasElement;
   private readonly canvas = new VanillaCanvas(this.canvasElement, true);
-  private readonly cube = createCube(this.canvas.scene, new THREE.MeshNormalMaterial());
+  private readonly cube = createSphere(
+    this.canvas.scene,
+    new THREE.MeshStandardMaterial({ color: Colour.ORANGE })
+  );
   private readonly groundPlane = createPlane(
     this.canvas.scene,
     new THREE.MeshStandardMaterial({ side: THREE.DoubleSide }),
@@ -21,8 +25,19 @@ export class LightingExample {
 
   constructor() {
     if (!this.canvasElement) return;
-    this.setGroundPlanePosition();
     this.canvas.addSceneLighting();
+    this.canvas.renderer.shadowMap.enabled = true;
+    this.cube.castShadow = true;
+    this.groundPlane.receiveShadow = true;
+    this.canvas.directionalLight.castShadow = true;
+    /**
+     * Sets the shadow render quality a bit like adding more vertices to a mesh
+     * Try and set the near/far properties on a light source camera to match exactly whats in your
+     * scene to improve precision& performance while reducing the chance of artifacting
+     */
+    this.canvas.directionalLight.shadow.mapSize.width = 1024;
+    this.canvas.directionalLight.shadow.mapSize.height = 1024;
+    this.setGroundPlanePosition();
     this.tick();
   }
 
