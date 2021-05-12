@@ -7,7 +7,10 @@ enum Element {
   PARTICLE_CANVAS = 'particle-canvas',
 }
 
-const POSITION_KEY = 'position';
+enum ParticleAttribute {
+  POSITION = 'position',
+  COLOR = 'color',
+}
 
 export class ParticlesScene {
   private readonly canvasElement = document.getElementById(
@@ -56,8 +59,11 @@ export class ParticlesScene {
      * BufferAttribute I believe behaves something like a stream, and the 3 here is so we send
      * through the data in sets of 3 XYZ for the coordinates for each point.
      */
-    particlesGeometry.setAttribute(POSITION_KEY, new THREE.BufferAttribute(positions, 3));
-    particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colours, 3));
+    particlesGeometry.setAttribute(
+      ParticleAttribute.POSITION,
+      new THREE.BufferAttribute(positions, 3)
+    );
+    particlesGeometry.setAttribute(ParticleAttribute.COLOR, new THREE.BufferAttribute(colours, 3));
 
     const points = new THREE.Points(
       particlesGeometry,
