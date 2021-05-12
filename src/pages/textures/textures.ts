@@ -34,6 +34,7 @@ export class TexturesExample {
 
   constructor() {
     if (!this.canvasElement) return;
+    this.canvas.perspectiveCamera.position.z = 6;
     this.setMinecraftTextureMagFilter();
     this.minecraftDiamondCube.position.x += 4;
     this.tick();
