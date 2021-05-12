@@ -29,10 +29,6 @@ export class VanillaCanvas {
       cameraProperties.fov,
       cameraProperties.aspect
     );
-    this.perspectiveCamera.position.x = 8;
-    this.perspectiveCamera.position.y = 5;
-    this.perspectiveCamera.position.z = 8;
-
     routeChange$.subscribe(this.setupCanvasAndOrbiter.bind(this));
   }
 

@@ -34,7 +34,6 @@ export class BasicScene {
   private renderer: THREE.WebGLRenderer;
 
   constructor() {
-    this.perspectiveCamera.position.set(0, 0, 15);
     routeChange$.subscribe(this.init.bind(this));
   }
 
