@@ -105,6 +105,7 @@ export class MaterialAndTextureExample {
 
   constructor() {
     if (!this.canvasElement) return;
+    this.canvas.perspectiveCamera.position.z = 6;
     this.spaceMeshesOut();
     this.addMeshesToGroup();
     this.setPointLightPosition();
@@ -139,10 +140,11 @@ export class MaterialAndTextureExample {
     this.group_3.add(this.torus_3);
     this.group_3.add(this.sphere_3);
     this.group.position.x = -2;
+    this.group.position.y = -2.5;
     this.group_2.position.x = -2;
-    this.group_2.position.y = 1.5;
+    this.group_2.position.y = -4;
     this.group_3.position.x = -2;
-    this.group_3.position.y = -1.5;
+    this.group_3.position.y = -5.5;
   }
 
   private spaceMeshesOut(): void {
