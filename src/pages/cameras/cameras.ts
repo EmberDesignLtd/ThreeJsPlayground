@@ -16,10 +16,10 @@ export class ThreeCameraPlayground {
   private cursorPosition = { x: 0, y: 0 };
 
   constructor() {
+    if (!this.canvasElement) return;
     this.mouseCoordinates.coordinates$.subscribe((cursorPosition) => {
       this.cursorPosition = cursorPosition;
     });
-    if (!this.canvasElement) return;
     this.tick();
   }
 
