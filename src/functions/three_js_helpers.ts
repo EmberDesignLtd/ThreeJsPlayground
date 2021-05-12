@@ -72,9 +72,13 @@ export const createPlane = (
   scene: THREE.Scene,
   material: THREEMaterial = new THREE.MeshBasicMaterial({ color: Colour.RED }),
   width = 1,
-  height = 1
+  height = 1,
+  segments = 32
 ): THREE.Mesh => {
-  const planeMesh = new THREE.Mesh(new THREE.PlaneGeometry(width, height), material);
+  const planeMesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(width, height, segments, segments),
+    material
+  );
   scene.add(planeMesh);
   return planeMesh;
 };
