@@ -36,6 +36,7 @@ export class JameiG {
   constructor() {
     if (!this.canvasElement) return;
     this.canvas.orbitControls.autoRotate = true;
+    this.canvas.perspectiveCamera.position.set(0, 0, 6);
     this.createInitialSpheres();
     this.canvas.addSceneLighting();
     this.canvas.scene.add(this.jimJamGroup);
@@ -43,14 +44,15 @@ export class JameiG {
     this.addVerticalPlanedSpheres();
     this.addDiagonalPlanedSpheresOne();
     this.addDiagonalPlanedSpheresTwo();
+    this.jimJamGroup.position.y = -0.5;
     this.tick();
   }
 
   private createInitialSpheres(): void {
-    this.createMoreSpheres(0.5, 5.5);
-    this.createMoreSpheres(0.5, 4);
-    this.createMoreSpheres(-1, 4);
-    this.createMoreSpheres(-1, 5.5);
+    this.createMoreSpheres(0.5, 1.5);
+    this.createMoreSpheres(0.5, 0);
+    this.createMoreSpheres(-1, 0);
+    this.createMoreSpheres(-1, 1.5);
   }
 
   private createMoreSpheres(x: number, y: number): THREE.Mesh {
@@ -70,36 +72,36 @@ export class JameiG {
 
   private addHorizontalPlanedSpheres(timeout = SPHERE_TIMEOUT_DELAY): void {
     setTimeout(() => {
-      this.spheresHorizontalPlane.push(this.createMoreSpheres(0.5, 4));
-      this.spheresHorizontalPlane.push(this.createMoreSpheres(-1, 5.5));
-      this.spheresHorizontalPlane.push(this.createMoreSpheres(0.5, 5.5));
-      this.spheresHorizontalPlane.push(this.createMoreSpheres(-1, 4));
+      this.spheresHorizontalPlane.push(this.createMoreSpheres(0.5, 0));
+      this.spheresHorizontalPlane.push(this.createMoreSpheres(-1, 1.5));
+      this.spheresHorizontalPlane.push(this.createMoreSpheres(0.5, 1.5));
+      this.spheresHorizontalPlane.push(this.createMoreSpheres(-1, 0));
       this.addHorizontalPlanedSpheres(timeout);
     }, timeout);
   }
 
   private addVerticalPlanedSpheres(timeout = SPHERE_TIMEOUT_DELAY): void {
     setTimeout(() => {
-      this.spheresVerticalPlane.push(this.createMoreSpheres(0.5, 5.5));
-      this.spheresVerticalPlane.push(this.createMoreSpheres(-1, 4));
-      this.spheresVerticalPlane.push(this.createMoreSpheres(-1, 5.5));
-      this.spheresVerticalPlane.push(this.createMoreSpheres(0.5, 4));
+      this.spheresVerticalPlane.push(this.createMoreSpheres(0.5, 1.5));
+      this.spheresVerticalPlane.push(this.createMoreSpheres(-1, 0));
+      this.spheresVerticalPlane.push(this.createMoreSpheres(-1, 1.5));
+      this.spheresVerticalPlane.push(this.createMoreSpheres(0.5, 0));
       this.addVerticalPlanedSpheres(timeout);
     }, timeout);
   }
 
   private addDiagonalPlanedSpheresOne(timeout = SPHERE_TIMEOUT_DELAY): void {
     setTimeout(() => {
-      this.spheresDiagonalPlaneOne.push(this.createMoreSpheres(-1, 4));
-      this.spheresDiagonalPlaneOne.push(this.createMoreSpheres(0.5, 5.5));
+      this.spheresDiagonalPlaneOne.push(this.createMoreSpheres(-1, 0));
+      this.spheresDiagonalPlaneOne.push(this.createMoreSpheres(0.5, 1.5));
       this.addDiagonalPlanedSpheresOne(timeout);
     }, timeout);
   }
 
   private addDiagonalPlanedSpheresTwo(timeout = SPHERE_TIMEOUT_DELAY): void {
     setTimeout(() => {
-      this.spheresDiagonalPlaneTwo.push(this.createMoreSpheres(0.5, 4));
-      this.spheresDiagonalPlaneTwo.push(this.createMoreSpheres(-1, 5.5));
+      this.spheresDiagonalPlaneTwo.push(this.createMoreSpheres(0.5, 0));
+      this.spheresDiagonalPlaneTwo.push(this.createMoreSpheres(-1, 1.5));
       this.addDiagonalPlanedSpheresTwo(timeout);
     }, timeout);
   }
