@@ -99,6 +99,7 @@ export class IntermediateTexturesExample {
 
   constructor() {
     if (!this.canvasElement) return;
+    this.canvas.perspectiveCamera.position.z = 6;
     this.environmentSphere.position.x = 3;
     this.environmentSphereTwo.position.x = -3;
     console.log(this.doorCube);
