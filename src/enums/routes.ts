@@ -14,4 +14,5 @@ export enum Route {
   JAMIE_G = '../pages/jamie_g/jamie_g.html',
   LIGHTING_SCENE = '../pages/lighting/lighting.html',
   PARTICLE_SCENE = '../pages/particles/particles.html',
+  SHADER_SCENE = '../pages/shaders_basic/shaders_basic.html',
 }

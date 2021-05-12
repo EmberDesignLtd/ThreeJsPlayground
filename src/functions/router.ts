@@ -11,6 +11,7 @@ import { Route } from './../enums/routes';
 import { JameiG } from './../pages/jamie_g/jamie_g';
 import { LightingExample } from './../pages/lighting/lighting';
 import { ParticlesScene } from './../pages/particles/particles';
+import { ShaderBasicsScene } from './../pages/shaders_basic/shaders_basic';
 
 const ROUTER_OUTLET = 'router-outlet';
 
@@ -20,7 +21,7 @@ const ROUTER_OUTLET = 'router-outlet';
  */
 export const routeChange$ = new BehaviorSubject(null);
 
-export const route = (pageLocation: string = Route.PARTICLE_SCENE) => {
+export const route = (pageLocation: string = Route.SHADER_SCENE) => {
   fetch(pageLocation)
     .then((data) => data.text())
     .then((html) => {
@@ -37,5 +38,6 @@ export const route = (pageLocation: string = Route.PARTICLE_SCENE) => {
       new JameiG();
       new LightingExample();
       new ParticlesScene();
+      new ShaderBasicsScene();
     });
 };
