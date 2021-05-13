@@ -15,4 +15,5 @@ export enum Route {
   LIGHTING_SCENE = '../pages/lighting/lighting.html',
   PARTICLE_SCENE = '../pages/particles/particles.html',
   SHADER_SCENE = '../pages/shaders_basic/shaders_basic.html',
+  SHADER_PATTERNS_SCENE = '../pages/shader_patterns/shader_patterns.html',
 }

@@ -5,6 +5,7 @@ import { DatGuiExample } from '../pages/dat_gui/dat_gui';
 import { Homepage } from '../pages/homepage/homepage';
 import { IntermediateTexturesExample } from '../pages/intermediate_textures/intermediate_textures';
 import { MaterialAndTextureExample } from '../pages/material_and_textures/material_and_textures';
+import { ShaderPatternsScene } from '../pages/shader_patterns/shader_patterns';
 import { SpaceEffect } from '../pages/space_effect/space_effect';
 import { TexturesExample } from '../pages/textures/textures';
 import { Route } from './../enums/routes';
@@ -21,7 +22,7 @@ const ROUTER_OUTLET = 'router-outlet';
  */
 export const routeChange$ = new BehaviorSubject(null);
 
-export const route = (pageLocation: string = Route.SHADER_SCENE) => {
+export const route = (pageLocation: string = Route.SHADER_PATTERNS_SCENE) => {
   fetch(pageLocation)
     .then((data) => data.text())
     .then((html) => {
@@ -39,5 +40,6 @@ export const route = (pageLocation: string = Route.SHADER_SCENE) => {
       new LightingExample();
       new ParticlesScene();
       new ShaderBasicsScene();
+      new ShaderPatternsScene();
     });
 };
