@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { RawShaderMaterial } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { THREEMaterial } from '../types/three_material';
 import { Colour } from './../enums/colour';
@@ -63,14 +64,14 @@ export const createSphere = (
     color: Colour.RED,
   })
 ): THREE.Mesh => {
-  const sphereMesh = new THREE.Mesh(new THREE.SphereGeometry(0.5, 64, 64), material);
+  const sphereMesh = new THREE.Mesh(new THREE.SphereGeometry(0.5, 6, 6), material);
   scene.add(sphereMesh);
   return sphereMesh;
 };
 
 export const createPlane = (
   scene: THREE.Scene,
-  material: THREEMaterial = new THREE.MeshBasicMaterial({ color: Colour.RED }),
+  material: THREEMaterial | RawShaderMaterial = new THREE.MeshBasicMaterial({ color: Colour.BLUE }),
   width = 1,
   height = 1,
   segments = 32
