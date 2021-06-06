@@ -5,9 +5,19 @@ uniform mat4 modelMatrix;
 uniform vec2 uWaveFrequency;
 uniform float uTime;
 
+// Provided by THREEJS constructor
+attribute vec3 position;
+attribute vec2 uv;
+
+// Used to pass down properties to the fragment
+varying vec2 vUv;
+
+
 void main(){
   vec4 modelPosition = modelMatrix * vec4(position, 1.0);
   vec4 viewPosition = viewMatrix * modelPosition;
   vec4 projectedPosition = projectionMatrix * viewPosition;
   gl_Position = projectedPosition;
+
+  vUv = uv;
 }

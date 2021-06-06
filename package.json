@@ -34,6 +34,7 @@
     "parcel-plugin-asset-copier": "^1.1.0",
     "parcel-plugin-glslify": "^0.1.0",
     "rxjs": "^7.0.0",
+    "simplex-noise": "^2.4.0",
     "three": "^0.128.0"
   },
   "assetsPath": "src"
